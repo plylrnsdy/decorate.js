@@ -1,0 +1,27 @@
+{
+  "type": "module",
+  "name": "decorate.js",
+  "description": "Decorate object method.",
+  "version": "1.0.0",
+  "author": "plylrnsdy <https://github.com/plylrnsdy>",
+  "keywords": [
+    "decorator"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc -P ."
+  },
+  "dependencies": {
+    "typescript": "^5.1.6"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/plylrnsdy/decorate.js#README.md",
+  "bugs": {
+    "url": "https://github.com/plylrnsdy/decorate.js/issues",
+    "email": "plylrnsdy@163.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/plylrnsdy/decorate.js.git"
+  }
+}
