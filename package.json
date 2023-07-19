@@ -1,12 +1,12 @@
 {
-  "type": "module",
-  "name": "decorate.js",
+  "name": "@plylrnsdy/decorate.js",
   "description": "Decorate object method.",
   "version": "1.0.0",
   "author": "plylrnsdy <https://github.com/plylrnsdy>",
   "keywords": [
     "decorator"
   ],
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "build": "tsc -P ."
