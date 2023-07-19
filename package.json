@@ -1,7 +1,7 @@
 {
   "name": "@plylrnsdy/decorate.js",
   "description": "Decorate object method.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "plylrnsdy <https://github.com/plylrnsdy>",
   "keywords": [
     "decorator"
