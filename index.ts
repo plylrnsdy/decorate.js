@@ -26,7 +26,7 @@ export default function decorate<
 }
 
 function wrap(object, method, original, wrappers) {
-  object[method] = wrappers.reduce((res, wrapper) => wrapper(res), original.bind(object))
+  object[method] = wrappers.reduce((res, wrapper) => wrapper(res), original)
 }
 
 decorate.parameters = function <
@@ -35,7 +35,9 @@ decorate.parameters = function <
   P = Parameters<O[K]>,
   W = (args: P) => P
 >(object: O, method: K, wrapper: W) {
-  return decorate(object, method, fn => (...args) => fn(...wrapper(args)))
+  return decorate(object, method, fn => function (...args) {
+    return fn.call(this, ...wrapper.call(this, args))
+  })
 }
 
 decorate.returnValue = function <
@@ -45,9 +47,9 @@ decorate.returnValue = function <
   R = ReturnType<O[K]>,
   W = (args: P, value: R) => R
 >(object: O, method: K, wrapper: W) {
-  return decorate(object, method, fn => (...args) => {
-    const res = fn(...args)
-    const wrapped = ret => wrapper(args, ret)
+  return decorate(object, method, fn => function (...args) {
+    const res = fn.call(this, ...args)
+    const wrapped = ret => wrapper.call(this, args, ret)
     return res instanceof Promise ? res.then(wrapped) : wrapped(res)
   })
 }
@@ -58,7 +60,9 @@ decorate.beforeCall = function <
   P = Parameters<O[K]>,
   L = (args: P) => void
 >(object: O, method: K, listener: L) {
-  return decorate.parameters(object, method, (args) => (listener(args), args));
+  return decorate.parameters(object, method, function (args) {
+    return (listener.call(this, args), args)
+  })
 }
 
 decorate.afterCall = function <
@@ -68,5 +72,7 @@ decorate.afterCall = function <
   R = ReturnType<O[K]>,
   L = (args: P, returnVal: R) => void
 >(object: O, method: K, listener: L) {
-  return decorate.returnValue(object, method, (args, res) => (listener(args, res), res))
+  return decorate.returnValue(object, method, function (args, res) {
+    return (listener(args, res), res)
+  })
 }
